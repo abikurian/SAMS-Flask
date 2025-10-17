@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Add Subject</h3>
+<form method="post">
+  <div class="mb-2"><input name="code" placeholder="Code (e.g. CS301)" class="form-control" required></div>
+  <div class="mb-2"><input name="name" placeholder="Name" class="form-control" required></div>
+  <div class="mb-2"><input name="department" placeholder="Department" class="form-control"></div>
+  <button class="btn btn-primary">Add</button>
+  <a class="btn btn-secondary" href="/subjects">Cancel</a>
+</form>
+{% endblock %}

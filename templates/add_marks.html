@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Add Marks</h3>
+<form method="post">
+  <div class="mb-2"><label>Student</label>
+    <select name="student_id" class="form-control">{% for s in students %}<option value="{{ s.id }}">{{ s.name }} ({{ s.roll_no }})</option>{% endfor %}</select></div>
+  <div class="mb-2"><label>Subject</label>
+    <select name="subject_id" class="form-control">{% for sub in subjects %}<option value="{{ sub.id }}">{{ sub.name }}</option>{% endfor %}</select></div>
+  <div class="mb-2"><input name="exam_type" placeholder="Exam Type (Internal-1)" class="form-control"></div>
+  <div class="mb-2"><input name="marks_obtained" placeholder="Marks Obtained" type="number" step="0.01" class="form-control"></div>
+  <div class="mb-2"><input name="max_marks" placeholder="Max Marks" type="number" step="0.01" class="form-control"></div>
+  <button class="btn btn-primary">Add</button>
+  <a class="btn btn-secondary" href="/marks">Cancel</a>
+</form>
+{% endblock %}

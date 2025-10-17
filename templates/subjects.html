@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <h3>Subjects</h3>
+  <a class="btn btn-success" href="/subjects/add">+ Add Subject</a>
+</div>
+<table class="table table-striped">
+<thead class="table-dark"><tr><th>ID</th><th>Code</th><th>Name</th><th>Dept</th><th>Actions</th></tr></thead>
+<tbody>
+{% for sub in subjects %}
+<tr>
+  <td>{{ sub.id }}</td><td>{{ sub.code }}</td><td>{{ sub.name }}</td><td>{{ sub.department }}</td>
+  <td>
+    <a href="/subjects/edit/{{ sub.id }}" class="btn btn-warning btn-sm">Edit</a>
+    <a href="/subjects/delete/{{ sub.id }}" class="btn btn-danger btn-sm">Delete</a>
+  </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

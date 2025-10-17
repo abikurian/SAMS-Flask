@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <h3>Attendance</h3>
+  <a class="btn btn-success" href="/attendance/mark">Mark Attendance</a>
+</div>
+<table class="table">
+<thead class="table-dark"><tr><th>ID</th><th>Date</th><th>Student</th><th>Subject</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody>
+{% for a in attendance %}
+<tr>
+  <td>{{ a.id }}</td><td>{{ a.date }}</td><td>{{ a.student_name }}</td><td>{{ a.subject_name }}</td><td>{{ a.status }}</td>
+  <td><a href="/attendance/delete/{{ a.id }}" class="btn btn-danger btn-sm">Delete</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="card p-3 mb-3">
+      <h5>Students</h5>
+      <p class="display-6">{{ students_count }}</p>
+      <a href="/students" class="btn btn-primary">Manage Students</a>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card p-3 mb-3">
+      <h5>Subjects</h5>
+      <p class="display-6">{{ subjects_count }}</p>
+      <a href="/subjects" class="btn btn-primary">Manage Subjects</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

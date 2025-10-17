@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Add Student</h3>
+<form method="post">
+  <div class="mb-2">
+    <input name="roll_no" placeholder="Roll No" class="form-control" required>
+  </div>
+  <div class="mb-2">
+    <input name="name" placeholder="Name" class="form-control" required>
+  </div>
+  <div class="mb-2">
+    <input name="department" placeholder="Department" class="form-control">
+  </div>
+  <div class="mb-2">
+    <input name="year" placeholder="Year" type="number" class="form-control">
+  </div>
+  <div class="mb-2">
+    <input name="email" placeholder="Email" type="email" class="form-control">
+  </div>
+  <div class="mb-2">
+    <input name="phone" placeholder="Phone" class="form-control">
+  </div>
+  <button class="btn btn-primary">Add</button>
+  <a class="btn btn-secondary" href="/students">Cancel</a>
+</form>
+{% endblock %}
