@@ -4,18 +4,50 @@
   <h3>Subjects</h3>
   <a class="btn btn-success" href="/subjects/add">+ Add Subject</a>
 </div>
-<table class="table table-striped">
-<thead class="table-dark"><tr><th>ID</th><th>Code</th><th>Name</th><th>Dept</th><th>Actions</th></tr></thead>
-<tbody>
-{% for sub in subjects %}
-<tr>
-  <td>{{ sub.id }}</td><td>{{ sub.code }}</td><td>{{ sub.name }}</td><td>{{ sub.department }}</td>
-  <td>
-    <a href="/subjects/edit/{{ sub.id }}" class="btn btn-warning btn-sm">Edit</a>
-    <a href="/subjects/delete/{{ sub.id }}" class="btn btn-danger btn-sm">Delete</a>
-  </td>
-</tr>
-{% endfor %}
-</tbody>
+
+<div class="row g-3 mb-3">
+  <div class="col-md-4">
+    <label class="form-label">Filter by Department</label>
+    <select id="departmentSelect" class="form-select">
+      <option value="">-- All Departments --</option>
+      {% for dept in departments %}
+        <option value="{{ dept }}" {% if dept == selected_dept %}selected{% endif %}>{{ dept }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+<table class="table table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>Subject Code</th>
+      <th>Subject Name</th>
+      <th>Department</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for sub in subjects %}
+      {% if not selected_dept or sub.department == selected_dept %}
+      <tr>
+        <td>{{ sub.code }}</td>
+        <td>{{ sub.name }}</td>
+        <td>{{ sub.department }}</td>
+        <td>
+          <a href="/subjects/edit/{{ sub.id }}" class="btn btn-warning btn-sm">Edit</a>
+          <a href="/subjects/delete/{{ sub.id }}" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+      </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
 </table>
+
+<script>
+  const deptSelect = document.getElementById('departmentSelect');
+  deptSelect.addEventListener('change', function() {
+    const dept = this.value;
+    window.location.href = "/subjects" + (dept ? "?department=" + dept : "");
+  });
+</script>
 {% endblock %}

@@ -67,3 +67,4 @@ INSERT INTO marks (student_id, subject_id, exam_type, marks_obtained, max_marks)
 (2,1,'Internal-1', 15, 20),
 (3,1,'Internal-1', 17, 20),
 (1,2,'Internal-1', 16, 20);
+ALTER TABLE attendance MODIFY subject_id INT NULL;

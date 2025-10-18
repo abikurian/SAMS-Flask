@@ -4,20 +4,57 @@
   <h3>Students</h3>
   <a class="btn btn-success" href="/students/add">+ Add Student</a>
 </div>
+
+<div class="row g-3 mb-3">
+  <div class="col-md-4">
+    <label class="form-label">Filter by Department</label>
+    <select id="departmentSelect" class="form-select">
+      <option value="">-- All Departments --</option>
+      {% for dept in departments %}
+        <option value="{{ dept }}" {% if dept == selected_dept %}selected{% endif %}>{{ dept }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
 <table class="table table-hover">
   <thead class="table-dark">
-    <tr><th>ID</th><th>Roll</th><th>Name</th><th>Dept</th><th>Year</th><th>Email</th><th>Phone</th><th>Actions</th></tr>
+    <tr>
+      <th>Roll</th>
+      <th>Name</th>
+      <th>Dept</th>
+      <th>Year</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </tr>
   </thead>
   <tbody>
     {% for s in students %}
-    <tr>
-      <td>{{ s.id }}</td><td>{{ s.roll_no }}</td><td>{{ s.name }}</td><td>{{ s.department }}</td><td>{{ s.year }}</td><td>{{ s.email }}</td><td>{{ s.phone }}</td>
-      <td>
-        <a href="/students/edit/{{ s.id }}" class="btn btn-warning btn-sm">Edit</a>
-        <a href="/students/delete/{{ s.id }}" class="btn btn-danger btn-sm">Delete</a>
-      </td>
-    </tr>
+      {% if not selected_dept or s.department == selected_dept %}
+      <tr>
+        <td>{{ s.roll_no }}</td>
+        <td>{{ s.name }}</td>
+        <td>{{ s.department }}</td>
+        <td>{{ s.year }}</td>
+        <td>{{ s.email }}</td>
+        <td>{{ s.phone }}</td>
+        <td>
+          <a href="/students/edit/{{ s.id }}" class="btn btn-warning btn-sm">Edit</a>
+          <a href="/students/delete/{{ s.id }}" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+      </tr>
+      {% endif %}
     {% endfor %}
   </tbody>
 </table>
+
+<script>
+  const deptSelect = document.getElementById('departmentSelect');
+
+  deptSelect.addEventListener('change', function() {
+    const dept = this.value;
+    window.location.href = "/students" + (dept ? "?department=" + dept : "");
+  });
+</script>
 {% endblock %}

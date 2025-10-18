@@ -1,18 +1,81 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-2">
-  <h3>Attendance</h3>
-  <a class="btn btn-success" href="/attendance/mark">Mark Attendance</a>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="mb-0">Attendance</h3>
+  <div>
+    <a class="btn btn-success" href="/attendance/mark">+ Mark Attendance</a>
+  </div>
 </div>
-<table class="table">
-<thead class="table-dark"><tr><th>ID</th><th>Date</th><th>Student</th><th>Subject</th><th>Status</th><th>Actions</th></tr></thead>
-<tbody>
-{% for a in attendance %}
-<tr>
-  <td>{{ a.id }}</td><td>{{ a.date }}</td><td>{{ a.student_name }}</td><td>{{ a.subject_name }}</td><td>{{ a.status }}</td>
-  <td><a href="/attendance/delete/{{ a.id }}" class="btn btn-danger btn-sm">Delete</a></td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
+
+<!-- Filter Form -->
+<form method="get" action="/attendance" class="row g-2 mb-4 align-items-end">
+  <div class="col-auto">
+    <label for="date" class="form-label text-light">Select Date:</label>
+    <input type="date" id="date" name="date"
+           class="form-control bg-dark text-light border-secondary"
+           value="{{ selected_date or '' }}" required>
+  </div>
+
+  <div class="col-auto">
+    <label for="department" class="form-label text-light">Department:</label>
+    <select name="department" id="department"
+            class="form-control bg-dark text-light border-secondary" required>
+      <option value="">-- Select Department --</option>
+      {% for dept in departments %}
+        <option value="{{ dept }}" {% if selected_dept==dept %}selected{% endif %}>{{ dept }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary">Filter</button>
+    <a href="/attendance" class="btn btn-outline-light">Reset</a>
+  </div>
+</form>
+
+<!-- Attendance Table -->
+{% if selected_date and selected_dept %}
+<div id="attendanceCard">
+  <table class="table table-hover align-middle mb-0">
+    <thead class="table-dark">
+      <tr>
+        <th>Roll Number</th>
+        <th>Student Name</th>
+        <th>Department</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in attendance %}
+      <tr>
+        <td>{{ a.roll_no }}</td>
+        <td>{{ a.student_name }}</td>
+        <td>{{ a.department }}</td>
+        <td>{{ a.date }}</td>
+        <td>{{ a.status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+<script>
+const dateInput = document.getElementById('date');
+const deptSelect = document.getElementById('department');
+const attendanceCard = document.getElementById('attendanceCard');
+
+function toggleAttendance() {
+    if (!attendanceCard) return;
+    attendanceCard.style.display =
+        dateInput.value && deptSelect.value ? 'block' : 'none';
+}
+
+dateInput.addEventListener('change', toggleAttendance);
+deptSelect.addEventListener('change', toggleAttendance);
+
+// Initial setup
+toggleAttendance();
+</script>
 {% endblock %}

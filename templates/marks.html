@@ -1,18 +1,65 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-2">
-  <h3>Marks</h3>
-  <a class="btn btn-success" href="/marks/add">Add Marks</a>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Marks</h3>
+    <a href="/marks/add" class="btn btn-success">Add Marks</a>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-md-4">
+      <label class="form-label">Select Subject</label>
+      <select id="subjectSelect" class="form-select">
+        <option value="">-- Select Subject --</option>
+        {% for sub in subjects %}
+          <option value="{{ sub.id }}" {% if sub.id == selected_subject %}selected{% endif %}>
+            {{ sub.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  {% if selected_subject %}
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Roll No</th>
+        <th>Student</th>
+        <th>Department</th>
+        <th>Subject</th>
+        <th>Exam Type</th>
+        <th>Marks Obtained</th>
+        <th>Max Marks</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in marks %}
+      <tr>
+        <td>{{ m.roll_no }}</td>
+        <td>{{ m.student_name }}</td>
+        <td>{{ m.department }}</td>
+        <td>{{ m.subject_name }}</td>
+        <td>{{ m.exam_type }}</td>
+        <td>{{ m.marks_obtained }}</td>
+        <td>{{ m.max_marks }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
 </div>
-<table class="table">
-<thead class="table-dark"><tr><th>ID</th><th>Student</th><th>Subject</th><th>Exam</th><th>Marks</th><th>Max</th><th>Actions</th></tr></thead>
-<tbody>
-{% for m in marks %}
-<tr>
-  <td>{{ m.id }}</td><td>{{ m.student_name }}</td><td>{{ m.subject_name }}</td><td>{{ m.exam_type }}</td><td>{{ m.marks_obtained }}</td><td>{{ m.max_marks }}</td>
-  <td><a href="/marks/delete/{{ m.id }}" class="btn btn-danger btn-sm">Delete</a></td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
+
+<script>
+  const subjectSelect = document.getElementById('subjectSelect');
+
+  subjectSelect.addEventListener('change', function() {
+    const subject = this.value;
+    let url = "/marks";
+    if (subject) {
+      url += "?subject=" + subject;
+    }
+    window.location.href = url;
+  });
+</script>
 {% endblock %}

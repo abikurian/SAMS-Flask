@@ -1,41 +1,147 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>SAMS</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
-    body { background:#0f1724; color:#e6eef8; }
-    .card { background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); }
-    a { color:#9be7ff; }
-    .btn-primary { background:#06b6d4; border:0; }
-    .table { color: #e6eef8; }
+    /* ===== Base Theme ===== */
+    body {
+      background-color: #0e1525;
+      color: #dce3f0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #79c0ff;
+      text-decoration: underline;
+    }
+
+    /* ===== Navbar ===== */
+    .navbar {
+      background-color: #111a2e;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.8rem 1.2rem;
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #ffffff !important;
+    }
+
+    .nav-link {
+      color: #b8c3d6 !important;
+      margin-right: 10px;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #58a6ff !important;
+    }
+
+    /* ===== Cards ===== */
+    .card {
+      background: rgba(129, 37, 37, 0.04);
+      border: 1px solid rgb(255, 255, 255);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.459);
+      color: #ffffff;
+    }
+
+    .card-header {
+      background: transparent;
+      border-bottom: 1px solid rgb(54, 33, 33);
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: #e6edf7;
+    }
+
+    /* ===== Buttons ===== */
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #339cff;
+      transform: translateY(-1px);
+    }
+
+    /* ===== Tables ===== */
+    .table {
+      color: #dce3f0;
+      border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .table thead th {
+      background-color: #19233a;
+      color: #9ab8d9;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .table tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    /* ===== Alerts ===== */
+    .alert {
+      border-radius: 10px;
+      border: none;
+      font-weight: 500;
+    }
+
+    .alert-success {
+      background-color: rgba(46, 204, 113, 0.1);
+      color: #2ecc71;
+    }
+
+    .alert-danger {
+      background-color: rgba(231, 76, 60, 0.1);
+      color: #e74c3c;
+    }
+
+    .alert-warning {
+      background-color: rgba(241, 196, 15, 0.1);
+      color: #f1c40f;
+    }
   </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg" style="background:#071126;">
-  <div class="container-fluid">
-    <a class="navbar-brand text-white" href="/">SAMS</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="/students">Students</a></li>
-        <li class="nav-item"><a class="nav-link" href="/subjects">Subjects</a></li>
-        <li class="nav-item"><a class="nav-link" href="/attendance">Attendance</a></li>
-        <li class="nav-item"><a class="nav-link" href="/marks">Marks</a></li>
-        <li class="nav-item"><a class="nav-link" href="/reports">Reports</a></li>
-      </ul>
+
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">SAMS</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="/students">Students</a></li>
+          <li class="nav-item"><a class="nav-link" href="/subjects">Subjects</a></li>
+          <li class="nav-item"><a class="nav-link" href="/attendance">Attendance</a></li>
+          <li class="nav-item"><a class="nav-link" href="/marks">Marks</a></li>
+          <li class="nav-item"><a class="nav-link" href="/reports">Reports</a></li>
+        </ul>
+      </div>
     </div>
+  </nav>
+
+  <div class="container py-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for cat, msg in messages %}
+          <div class="alert alert-{{cat}}">{{msg}}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
   </div>
-</nav>
-<div class="container py-4">
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for cat, msg in messages %}
-        <div class="alert alert-{{cat}}">{{msg}}</div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-  {% block content %}{% endblock %}
-</div>
+
 </body>
 </html>

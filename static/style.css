@@ -1,0 +1,95 @@
+body {
+  background-color: #0B132B;
+  color: #E0E6ED;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+  background-color: #1C2541 !important;
+}
+
+.navbar-brand {
+  color: #3A86FF !important;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.nav-link {
+  color: #E0E6ED !important;
+  font-weight: 500;
+  margin-right: 10px;
+}
+.nav-link:hover {
+  color: #3A86FF !important;
+}
+
+h3, h2, h5 {
+  color: #FFBE0B;
+  font-weight: 600;
+}
+
+.card {
+  background-color: #1C2541;
+  border: 1px solid #3A86FF33;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+.card:hover {
+  transform: scale(1.02);
+}
+
+.btn-primary {
+  background-color: #3A86FF;
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #2563EB;
+}
+.btn-success {
+  background-color: #06D6A0;
+  border: none;
+}
+.btn-success:hover {
+  background-color: #05A57E;
+}
+.btn-danger {
+  background-color: #EF476F;
+  border: none;
+}
+.btn-danger:hover {
+  background-color: #D62839;
+}
+.btn-warning {
+  background-color: #FFD166;
+  border: none;
+  color: #1C2541;
+  font-weight: 500;
+}
+.btn-warning:hover {
+  background-color: #EFB100;
+}
+
+.table {
+  color: #E0E6ED;
+  border-color: #2C355A;
+}
+.table-dark {
+  background-color: #1C2541;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+input, select, textarea {
+  background-color: #1C2541 !important;
+  color: #E0E6ED !important;
+  border: 1px solid #3A86FF55 !important;
+}
+input:focus, select:focus {
+  border-color: #3A86FF !important;
+  box-shadow: 0 0 3px #3A86FF55;
+}
+
+.alert {
+  border-radius: 8px;
+}

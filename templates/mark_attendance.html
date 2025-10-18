@@ -2,22 +2,61 @@
 {% block content %}
 <h3>Mark Attendance</h3>
 <form method="post">
+
+  <!-- Department Selection -->
   <div class="mb-2">
-    <label>Subject</label>
-    <select name="subject_id" class="form-control">
-      {% for sub in subjects %}<option value="{{ sub.id }}">{{ sub.name }} ({{ sub.code }})</option>{% endfor %}
+    <label>Department</label>
+    <select name="department" id="departmentSelect" class="form-control" required>
+      <option value="">-- Select Department --</option>
+      {% for dept in departments %}
+        <option value="{{ dept }}" {% if dept == selected_dept %}selected{% endif %}>{{ dept }}</option>
+      {% endfor %}
     </select>
   </div>
-  <div class="mb-2"><label>Date</label><input type="date" name="date" value="{{ today }}" class="form-control"></div>
 
-  <h5>Students</h5>
-  {% for s in students %}
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="present" value="{{ s.id }}" id="p{{ s.id }}">
-      <label class="form-check-label" for="p{{ s.id }}">{{ s.name }} ({{ s.roll_no }})</label>
+  <!-- Date Selection -->
+  <div class="mb-2">
+    <label>Date</label>
+    <input type="date" name="date" value="{{ today }}" class="form-control" required>
+  </div>
+
+  <!-- Students Section (Hidden by default) -->
+  <div id="studentsSection" style="display:none;">
+    <h5>Students</h5>
+    <div id="studentsList">
+      {% for s in students %}
+        <div class="form-check" data-dept="{{ s.department }}" style="display:none;">
+          <input class="form-check-input" type="checkbox" name="present" value="{{ s.id }}" id="p{{ s.id }}">
+          <label class="form-check-label" for="p{{ s.id }}">{{ s.name }} ({{ s.roll_no }})</label>
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-  <button class="btn btn-primary mt-2">Save Attendance</button>
-  <a class="btn btn-secondary" href="/attendance">Cancel</a>
+  </div>
+
+  <!-- Buttons -->
+  <button class="btn btn-primary mt-3">Save Attendance</button>
+  <a class="btn btn-secondary mt-3" href="/attendance">Cancel</a>
 </form>
+
+<!-- JavaScript -->
+<script>
+const deptSelect = document.getElementById('departmentSelect');
+const studentsSection = document.getElementById('studentsSection');
+
+function updateStudentList() {
+    const selectedDept = deptSelect.value;
+    const hasSelection = selectedDept !== "";
+    studentsSection.style.display = hasSelection ? 'block' : 'none';
+
+    document.querySelectorAll('#studentsList .form-check').forEach(div => {
+        div.style.display = (div.dataset.dept === selectedDept) ? 'block' : 'none';
+    });
+}
+
+// Trigger update when department changes
+deptSelect.addEventListener('change', updateStudentList);
+
+// Trigger once on page load (to restore selection state)
+updateStudentList();
+</script>
 {% endblock %}

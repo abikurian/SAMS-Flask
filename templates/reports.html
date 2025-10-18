@@ -1,32 +1,77 @@
 {% extends "base.html" %}
 {% block content %}
 <h3>Reports</h3>
+
+<!-- Department Filter -->
+<form method="get" class="row g-2 mb-4 align-items-end">
+  <div class="col-auto">
+    <label for="department" class="form-label">Select Department:</label>
+    <select name="department" id="department" class="form-control" required>
+      <option value="">-- Select Department --</option>
+      {% for dept in departments %}
+        <option value="{{ dept }}" {% if selected_dept == dept %}selected{% endif %}>{{ dept }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary">Show Report</button>
+    <a href="/reports" class="btn btn-outline-secondary">Reset</a>
+  </div>
+</form>
+
+{% if selected_dept %}
 <div class="row">
   <div class="col-md-6">
     <div class="card p-3 mb-3">
-      <h5>Attendance Summary</h5>
+      <h5>Attendance Summary ({{ selected_dept }})</h5>
       <table class="table">
-        <thead class="table-dark"><tr><th>Student</th><th>Present</th><th>Total</th><th>%</th></tr></thead>
+        <thead class="table-dark">
+          <tr>
+            <th>Student</th>
+            <th>Present</th>
+            <th>Total</th>
+            <th>%</th>
+          </tr>
+        </thead>
         <tbody>
-        {% for r in att_summary %}
-        <tr><td>{{ r.name }}</td><td>{{ r.present }}</td><td>{{ r.total }}</td><td>{{ r.percent if r.percent != None else '-' }}</td></tr>
-        {% endfor %}
+          {% for r in att_summary %}
+          <tr>
+            <td>{{ r.name }}</td>
+            <td>{{ r.present }}</td>
+            <td>{{ r.total }}</td>
+            <td>{{ r.percent if r.percent != None else '-' }}</td>
+          </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
+
   <div class="col-md-6">
     <div class="card p-3 mb-3">
-      <h5>Marks Summary</h5>
+      <h5>Marks Summary ({{ selected_dept }})</h5>
       <table class="table">
-        <thead class="table-dark"><tr><th>Student</th><th>Sum</th><th>Max</th><th>%</th></tr></thead>
+        <thead class="table-dark">
+          <tr>
+            <th>Student</th>
+            <th>Sum</th>
+            <th>Max</th>
+            <th>%</th>
+          </tr>
+        </thead>
         <tbody>
-        {% for r in marks_summary %}
-          <tr><td>{{ r.name }}</td><td>{{ r.sum_marks }}</td><td>{{ r.sum_max }}</td><td>{{ r.percent if r.percent != None else '-' }}</td></tr>
-        {% endfor %}
+          {% for r in marks_summary %}
+          <tr>
+            <td>{{ r.name }}</td>
+            <td>{{ r.sum_marks }}</td>
+            <td>{{ r.sum_max }}</td>
+            <td>{{ r.percent if r.percent != None else '-' }}</td>
+          </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 </div>
+{% endif %}
 {% endblock %}
